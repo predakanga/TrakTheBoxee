@@ -408,9 +408,11 @@ public class TrakTheBoxeeTrayIcon extends TrayIcon implements javax.jmdns.Servic
         Map boxeeData = boxee.getCurrentlyPlaying();
         
         // If the playing file has changed, mark it as not scrobbled
-        if(lastReportData != null && !lastReportData.get("title").equals(boxeeData.get("title"))) {
-            _log.log(Level.INFO, "Video file has changed. Resetting has-scrobbled");
-            hasBeenScrobbled = false;
+        if(lastReportData != null) {
+            if(!lastReportData.get("title").equals(boxeeData.get("title"))) {
+                _log.log(Level.INFO, "Video file has changed. Resetting has-scrobbled");
+                hasBeenScrobbled = false;
+            }
         }
         lastReportData = boxeeData;
         if(boxeeData.get("type").equals("none")) {
@@ -490,13 +492,15 @@ public class TrakTheBoxeeTrayIcon extends TrayIcon implements javax.jmdns.Servic
                 int year = Integer.parseInt((String)showData.get("year"));
                 int season = Integer.parseInt((String)showData.get("season"));
                 int episode = Integer.parseInt((String)showData.get("episode"));
-                trakt.watchingShow((String)showData.get("title"), year, season, episode, (int)duration, progress);
+                trakt.scrobbleShow((String)showData.get("title"), year, season, episode, (int)duration, progress);
                 // Update the latest scrobbled, just debug info for now
-                scrobbledItem.setLabel("Scrobbled" + (String)showData.get("title"));
+                scrobbledItem.setLabel("Scrobbled " + (String)showData.get("title"));
             } else if(showData.get("type").equals("movie")) {
                 int year = Integer.parseInt((String)showData.get("year"));
-                trakt.watchingMovie((String)showData.get("title"), year, (int)duration, progress);
-                scrobbledItem.setLabel("Scrobbled" + (String)showData.get("title"));
+                trakt.scrobbleMovie((String)showData.get("title"), year, (int)duration, progress);
+                scrobbledItem.setLabel("Scrobbled " + (String)showData.get("title"));
+            } else {
+                _log.info("Not scrobbling - " + (String)showData.get("title") + " doesn't appear to be a TV show or movie");
             }
         } else {
             _log.log(Level.INFO, "Not scrobbling, no Trakt API available");

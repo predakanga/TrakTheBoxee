@@ -224,8 +224,11 @@ public class BoxeeClient {
         HashMap retMap = new HashMap();
         if(response.get("VideoPlayer.Title").equals("")) {
             retMap.put("type", "none");
-            return retMap;
         } else {
+            // Safety net for no known year
+            if(response.get("VideoPlayer.Year").equals("")) {
+                response.put("VideoPlayer.Year", "0");
+            }
             // Calculate the length and progress
             long duration = timeStrToSeconds((String)response.get("VideoPlayer.Duration"));
             long time = timeStrToSeconds((String)response.get("VideoPlayer.Time"));

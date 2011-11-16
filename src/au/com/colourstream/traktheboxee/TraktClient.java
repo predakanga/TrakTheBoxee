@@ -5,6 +5,7 @@
 package au.com.colourstream.traktheboxee;
 
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.ShowService;
 import java.security.MessageDigest;
@@ -19,6 +20,7 @@ import java.util.logging.*;
  */
 public class TraktClient {
     private ServiceManager manager;
+    Logger _log = Logger.getLogger(this.getClass().getCanonicalName());
     
     public TraktClient() {
         manager = new ServiceManager();
@@ -36,10 +38,12 @@ public class TraktClient {
     
     public void scrobbleShow(String show, int year, int season, int episode, int duration, int progress) {
         manager.showService().scrobble(show, year).season(season).episode(episode).duration(duration).progress(progress).fire();
+        _log.info("Scrobbled episode: " + show + " " + season + "x" + episode);
     }
     
     public void scrobbleMovie(String title, int year, int duration, int progress) {
         manager.movieService().scrobble(title, year).duration(duration).progress(progress).fire();
+        _log.info("Scrobbled movie: " + title);
     }
     
     public void watchingShow(String show, int year, int season, int episode, int duration, int progress) {

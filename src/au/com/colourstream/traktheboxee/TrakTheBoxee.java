@@ -16,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author predakanga
  */
 public class TrakTheBoxee {
-    public static final String version = "2.0.0";
+    public static final String version = "2.0.0b2";
     public static final String apiKey = "42920cadcb31ff648cb5fe2865473c9bf164c5bd";
     
     /**
