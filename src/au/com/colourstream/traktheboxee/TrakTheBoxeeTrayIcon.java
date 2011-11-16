@@ -108,7 +108,6 @@ public class TrakTheBoxeeTrayIcon extends TrayIcon implements javax.jmdns.Servic
         } else {
             // If we have preferences, set up the Trakt API
             trakt = new TraktClient();
-            trakt.watchingShow("Todd and the Book of Pure Evil", 2010, 1, 10, 30, 5);
         }
         // If we have a previous server, connect to it here
     }
