@@ -245,7 +245,7 @@ public class BoxeeClient {
                 retMap.put("episode", response.get("VideoPlayer.Episode"));
                 retMap.put("episode_title", response.get("VideoPlayer.Title"));
                 retMap.put("year", response.get("VideoPlayer.Year"));
-            } else if(!response.get("VideoPlayer.Year").equals("")) {
+            } else if(!response.get("VideoPlayer.Year").equals("0")) {
                 retMap.put("type", "movie");
                 retMap.put("title", response.get("VideoPlayer.Title"));
                 retMap.put("year", response.get("VideoPlayer.Year"));
